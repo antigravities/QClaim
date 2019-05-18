@@ -1,0 +1,4 @@
+storage: flat
+points:
+  enabled: true
+  default: 22500

@@ -1,0 +1,53 @@
+main: cafe.cutie.qclaim.QClaim.Plugin
+name: QClaim
+version: 1.0.0
+description: Player claim protection
+api-version: 1.14
+author: Cutie Cafe (cutie.cafe)
+website: https://cutie.cafe/
+commands:
+  qmark:
+    description: Mark and claim areas.
+    usage: /qmark (claim)
+  qclaim:
+    description: Discover who owns what you are standing in.
+    usage: /qclaim
+  qbuddy:
+    description: Add another player to your buddy list, allowing them to write in your claims.
+    usage: /qbuddy (remove?) player
+permissions:
+  qclaim.*:
+    description: All commands and free claims
+    default: op
+  qclaim.view:
+    description: View who owns claims
+    default: true
+  qclaim.claim.*:
+    description: Define, create, and remove claims
+    children:
+      qclaim.claim.mark:
+        description: Mark claims
+        default: true
+      qclaim.claim.claim:
+        description: Finalize and create claims
+        default: true
+      qclaim.claim.remove:
+        description: Remove (own) claims
+        default: true
+  qclaim.admin.*:
+    description: Grants access to free claims and admin commands.
+    default: op
+    children:
+      qclaim.admin.free:
+        description: With this permission, all claims are free
+        default: op
+      qclaim.admin.remove:
+        description: Remove (other's) claims
+        default: op
+      qclaim.admin.ignore:
+        description: Allow this user to build in claims that are not their own
+        default: op
+  qclaim.buddy:
+    description: Add/remove buddies (people who can build in one's own claims)
+    default: true
+  
