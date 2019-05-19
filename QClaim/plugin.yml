@@ -15,6 +15,9 @@ commands:
   qbuddy:
     description: Add another player to your buddy list, allowing them to write in your claims.
     usage: /qbuddy (remove?) player
+  qpoints:
+    description: View the number of points you have to spend on claims.
+    usage: /qpoints
 permissions:
   qclaim.*:
     description: All commands and free claims

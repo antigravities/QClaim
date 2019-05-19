@@ -177,7 +177,7 @@ public class FlatStorage implements IStorage {
 
 	@Override
 	public long getClaimPoints(OfflinePlayer player) {
-		return this.pointsCache.getOrDefault(player.getUniqueId().toString(), (long) plugin.getConfig().getLong("points.default"));
+		return this.pointsCache.getOrDefault(player.getUniqueId().toString(), (long) 0);
 	}
 
 	@Override

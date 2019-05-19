@@ -81,13 +81,13 @@ public class CommandQMark implements CommandExecutor {
 			if( ! ply.hasPermission("qclaim.free") ) {
 				long points = this.gamePlugin.getStorage().getClaimPoints(ply);
 				
-				if( points < proposed.width*proposed.height ) {
-					sender.sendMessage(ChatColor.RED + "You do not have enough points to claim this (have: " + points + ", need: " + (proposed.width*proposed.height));
+				if( this.gamePlugin.getDefaultPoints()-points < proposed.width*proposed.height ) {
+					sender.sendMessage(ChatColor.RED + "You do not have enough points to claim this (have: " + (this.gamePlugin.getDefaultPoints()-points) + ", need: " + (proposed.width*proposed.height));
 					return true;
 				}
 				
-				this.gamePlugin.getStorage().setClaimPoints(ply, points-proposed.width*proposed.height);
-				sender.sendMessage(ChatColor.BLUE + "This claim cost " + (proposed.width*proposed.height) + " points. You now have " + (points-proposed.width*proposed.height) + " points.");
+				this.gamePlugin.getStorage().setClaimPoints(ply, points+proposed.width*proposed.height);
+				sender.sendMessage(ChatColor.BLUE + "This claim cost " + (proposed.width*proposed.height) + " points. You now have " + (this.gamePlugin.getDefaultPoints()-(points+(proposed.width*proposed.height))) + " points.");
 			}
 			
 			this.gamePlugin.getStorage().createClaim(new Claim(x1, y1, x2, y2, ply));

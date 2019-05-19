@@ -51,8 +51,8 @@ public class CommandQClaim implements CommandExecutor {
 					
 					Rectangle rect = thisClaim.toRectangle();
 					
-					this.gamePlugin.getStorage().setClaimPoints(thisClaim.owner, this.gamePlugin.getStorage().getClaimPoints(thisClaim.owner) + (rect.width*rect.height));
-					sender.sendMessage(ChatColor.GREEN + (thisClaim.owner.getUniqueId().equals(((Player) sender).getUniqueId()) ? "C": thisClaim.owner.getName() + "'s c") + "laim was deleted. " + (rect.width*rect.height) + " points were restored; the total is now " + (gamePlugin.getStorage().getClaimPoints(thisClaim.owner) + (rect.width*rect.height)) + ".");
+					this.gamePlugin.getStorage().setClaimPoints(thisClaim.owner, this.gamePlugin.getStorage().getClaimPoints(thisClaim.owner) - (rect.width*rect.height));
+					sender.sendMessage(ChatColor.GREEN + (thisClaim.owner.getUniqueId().equals(((Player) sender).getUniqueId()) ? "C": thisClaim.owner.getName() + "'s c") + "laim was deleted. " + (rect.width*rect.height) + " points were restored; the total is now " + (this.gamePlugin.getDefaultPoints()-this.gamePlugin.getStorage().getClaimPoints(thisClaim.owner)) + ".");
 					return true;
 				}
 			} else {

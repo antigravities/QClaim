@@ -23,7 +23,7 @@ public class CommandQPoints implements CommandExecutor {
 			return true;
 		}
 		
-		sender.sendMessage(ChatColor.BLUE + "You have " + this.gamePlugin.getStorage().getClaimPoints((Player) sender));
+		sender.sendMessage(ChatColor.BLUE + "You have " + (this.gamePlugin.getDefaultPoints()-this.gamePlugin.getStorage().getClaimPoints((Player) sender)) + " points available to spend.");
 		return true;
 	}
 
