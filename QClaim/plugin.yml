@@ -1,6 +1,6 @@
 main: cafe.cutie.qclaim.QClaim.Plugin
 name: QClaim
-version: 1.0.0
+version: 2.0.0
 description: Player claim protection
 api-version: 1.14
 author: Cutie Cafe (cutie.cafe)
