@@ -24,6 +24,9 @@ public class Plugin extends JavaPlugin {
 		this.config.addDefault("points.enabled", true);
 		this.config.addDefault("points.default", (long) 22500);
 		
+		this.config.addDefault("spawnprotect.enabled", true);
+		this.config.addDefault("spawnprotect.distance", (long) 100);
+		
 		this.getCommand("qmark").setExecutor(new CommandQMark(this));
 		this.getCommand("qclaim").setExecutor(new CommandQClaim(this));
 		this.getCommand("qbuddy").setExecutor(new CommandQBuddy(this));

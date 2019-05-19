@@ -19,35 +19,39 @@ permissions:
   qclaim.*:
     description: All commands and free claims
     default: op
-  qclaim.view:
-    description: View who owns claims
-    default: true
-  qclaim.claim.*:
-    description: Define, create, and remove claims
     children:
-      qclaim.claim.mark:
-        description: Mark claims
+      qclaim.view:
+        description: View who owns claims
         default: true
-      qclaim.claim.claim:
-        description: Finalize and create claims
+      qclaim.claim.*:
+        description: Define, create, and remove claims
+        children:
+          qclaim.claim.mark:
+            description: Mark claims
+            default: true
+          qclaim.claim.claim:
+            description: Finalize and create claims
+            default: true
+          qclaim.claim.remove:
+            description: Remove (own) claims
+            default: true
+      qclaim.admin.*:
+        description: Grants access to free claims and admin commands.
+        default: op
+        children:
+          qclaim.admin.free:
+            description: With this permission, all claims are free
+            default: op
+          qclaim.admin.remove:
+            description: Remove (other's) claims
+            default: op
+          qclaim.admin.ignore:
+            description: Allow this user to build in claims that are not their own
+            default: op
+          qclaim.admin.claimspawn:
+            description: Allow this user to claim within the spawn protection boundaries
+            default: op 
+      qclaim.buddy:
+        description: Add/remove buddies (people who can build in one's own claims)
         default: true
-      qclaim.claim.remove:
-        description: Remove (own) claims
-        default: true
-  qclaim.admin.*:
-    description: Grants access to free claims and admin commands.
-    default: op
-    children:
-      qclaim.admin.free:
-        description: With this permission, all claims are free
-        default: op
-      qclaim.admin.remove:
-        description: Remove (other's) claims
-        default: op
-      qclaim.admin.ignore:
-        description: Allow this user to build in claims that are not their own
-        default: op
-  qclaim.buddy:
-    description: Add/remove buddies (people who can build in one's own claims)
-    default: true
   

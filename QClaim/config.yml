@@ -2,3 +2,6 @@ storage: flat
 points:
   enabled: true
   default: 22500
+spawnprotect:
+  enabled: true
+  distance: 100

@@ -63,6 +63,10 @@ Permissions are set to some sane defaults if you don't want to go overboard with
     default: true
 ```
 
+## Building this yourself
+
+It's a Maven project. You can just run `mvn package` on it.
+
 ## License
 
 ```

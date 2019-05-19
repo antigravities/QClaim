@@ -1,6 +1,5 @@
 package cafe.cutie.qclaim.QClaim.commands;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import cafe.cutie.qclaim.QClaim.Plugin;
 
 public class CommandQMark implements CommandExecutor {
 
-	private HashMap<Player, ArrayList<Point>> playerLocs = new HashMap<Player, ArrayList<Point>>();
+	private HashMap<Player, ArrayList<Location>> playerLocs = new HashMap<Player, ArrayList<Location>>();
 	private Plugin gamePlugin;
 	
 	public CommandQMark(Plugin p) {
@@ -49,13 +48,23 @@ public class CommandQMark implements CommandExecutor {
 				return true;
 			}
 			
-			ArrayList<Point> locs = this.playerLocs.get(ply);
+			ArrayList<Location> locs = this.playerLocs.get(ply);
 			
-			int x1 = locs.get(0).x;
-			int x2 = locs.get(1).x;
+			if( gamePlugin.getConfig().getBoolean("spawnprotect.enabled") && ! ply.hasPermission("qclaim.admin.claimspawn") ) {
+				long dist = gamePlugin.getConfig().getLong("spawnprotect.distance");
+				Location spawn = ply.getWorld().getSpawnLocation();
+				
+				if( spawn.distance(locs.get(0)) < dist || spawn.distance(locs.get(1)) < dist ) {
+					sender.sendMessage(ChatColor.RED + "You are claiming too close to spawn (" + ((int) Math.floor(Math.min(spawn.distance(locs.get(0)), spawn.distance(locs.get(1))))) + " blocks)! Please move at least " + dist + " blocks away from the spawnpoint and try again.");
+					return true;
+				}
+			}
 			
-			int y1 = locs.get(0).y;
-			int y2 = locs.get(1).y;
+			int x1 = locs.get(0).getBlockX();
+			int x2 = locs.get(1).getBlockX();
+			
+			int y1 = locs.get(0).getBlockZ();
+			int y2 = locs.get(1).getBlockZ();
 			
 			Rectangle proposed = new Rectangle(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2-x1), Math.abs(y2-y1));
 			
@@ -81,7 +90,7 @@ public class CommandQMark implements CommandExecutor {
 				sender.sendMessage(ChatColor.BLUE + "This claim cost " + (proposed.width*proposed.height) + " points. You now have " + (points-proposed.width*proposed.height) + " points.");
 			}
 			
-			this.gamePlugin.getStorage().createClaim(new Claim(locs.get(0).x, locs.get(0).y, locs.get(1).x, locs.get(1).y, ply));
+			this.gamePlugin.getStorage().createClaim(new Claim(x1, y1, x2, y2, ply));
 			sender.sendMessage(ChatColor.GREEN + "Your claim has been created");
 			return true;
 		}
@@ -90,10 +99,10 @@ public class CommandQMark implements CommandExecutor {
 		
 		if( ! this.playerLocs.containsKey(ply) || this.playerLocs.get(ply).size() > 1 ) {
 			sender.sendMessage(ChatColor.RED + "Locations reset.");
-			this.playerLocs.put(ply, new ArrayList<Point>());
+			this.playerLocs.put(ply, new ArrayList<Location>());
 		}
 		
-		this.playerLocs.get(ply).add(0, new Point(loc.getBlockX(), loc.getBlockZ()));
+		this.playerLocs.get(ply).add(loc);
 		
 		sender.sendMessage(ChatColor.GREEN + "Location marked at (" + loc.getBlockX() + ", " + loc.getBlockZ() + ").");
 		sender.sendMessage(ChatColor.AQUA + "Once you have marked both corners of your proposed claim, finalize it with /qmark claim.");
